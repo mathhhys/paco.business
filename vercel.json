@@ -1,5 +1,0 @@
-{
-  "installCommand": "cd casino-roulette && npm ci",
-  "buildCommand": "cd casino-roulette && npm run build",
-  "outputDirectory": "./casino-roulette/.next"
-}
