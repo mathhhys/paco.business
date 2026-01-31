@@ -38,7 +38,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ firstNames, lastNames, onSpin
 
     // Animate with a smooth cubic-bezier for that casino feel
     const spinTransition = {
-      duration: 3,
+      duration: 1.5,
       ease: [0.45, 0.05, 0.55, 0.95] as BezierDefinition,
     };
 
