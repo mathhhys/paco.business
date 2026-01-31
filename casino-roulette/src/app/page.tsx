@@ -12,6 +12,7 @@ export default function Home() {
   const [firstNames, setFirstNames] = useState<FirstName[]>([]);
   const [lastNames, setLastNames] = useState<LastName[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchNames() {
@@ -37,8 +38,10 @@ export default function Home() {
 
         setFirstNames(mappedFirsts);
         setLastNames(mappedLasts);
-      } catch (err) {
+        setError(null);
+      } catch (err: any) {
         console.error('Failed to fetch names:', err);
+        setError(err?.message || 'Failed to connect to database. Please check your Supabase configuration.');
       } finally {
         setIsLoading(false);
       }
@@ -62,6 +65,37 @@ export default function Home() {
     );
   }
 
+  if (error) {
+    return (
+      <main className="min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white p-8">
+        <div className="text-center max-w-md">
+          <div className="text-5xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-red-400 mb-4">Connection Error</h2>
+          <p className="text-slate-300 mb-6">{error}</p>
+          <p className="text-sm text-slate-500">
+            Make sure your <code className="bg-slate-800 px-2 py-1 rounded">.env.local</code> file contains valid Supabase credentials.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  if (firstNames.length === 0 || lastNames.length === 0) {
+    return (
+      <main className="min-h-screen bg-[#1a1a1a] flex items-center justify-center text-white p-8">
+        <div className="text-center max-w-md">
+          <div className="text-5xl mb-4">📭</div>
+          <h2 className="text-2xl font-bold text-yellow-400 mb-4">No Data Available</h2>
+          <p className="text-slate-300 mb-6">
+            The database tables appear to be empty. Please add data to the
+            <code className="bg-slate-800 px-2 py-1 rounded mx-1">paconames</code> and
+            <code className="bg-slate-800 px-2 py-1 rounded mx-1">pacosurname</code> tables.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#1a1a1a] flex flex-col items-center justify-center p-8 gap-16 text-white">
       <div className="flex flex-col items-center gap-12 w-full max-w-4xl">
@@ -69,10 +103,10 @@ export default function Home() {
           <PlayerResult firstName={selectedFirst} lastName={selectedLast} />
         )}
 
-        <SlotMachine 
-          firstNames={firstNames} 
-          lastNames={lastNames} 
-          onSpinComplete={handleSpinComplete} 
+        <SlotMachine
+          firstNames={firstNames}
+          lastNames={lastNames}
+          onSpinComplete={handleSpinComplete}
         />
       </div>
     </main>
