@@ -2,8 +2,8 @@
   "name": "pacomendes.business",
   "version": "1.0.0",
   "scripts": {
-    "dev": "cd casino-roulette && nvm exec 20 npm run dev",
-    "build": "cd casino-roulette && nvm exec 20 npm run build",
-    "start": "cd casino-roulette && nvm exec 20 npm run start"
+    "dev": "cd casino-roulette && npm run dev",
+    "build": "cd casino-roulette && npm run build",
+    "start": "cd casino-roulette && npm run start"
   }
 }
