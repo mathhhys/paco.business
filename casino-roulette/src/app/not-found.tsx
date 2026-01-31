@@ -1,6 +1,16 @@
+'use client';
+
 import Link from 'next/link'
- 
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
+
 export default function NotFound() {
+  const pathname = usePathname()
+
+  useEffect(() => {
+    console.error(`404 Error: Page not found at ${pathname}`)
+  }, [pathname])
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h2 className="text-4xl font-bold mb-4">Not Found</h2>
