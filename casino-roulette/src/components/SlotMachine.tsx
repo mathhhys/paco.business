@@ -97,17 +97,9 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ firstNames, lastNames, onSpin
               {lastNamesStrip.map((item, idx) => (
                 <div
                   key={`${item.id}-${idx}`}
-                  className="h-32 flex items-center justify-center text-2xl md:text-4xl font-bold text-white gap-3"
+                  className="h-32 flex items-center justify-center text-2xl md:text-4xl font-bold text-white"
                 >
-                  <div className="relative w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-slate-500 flex-shrink-0">
-                    <Image
-                      src={item.image_url ?? '/images/player1.svg'}
-                      alt={item.name ?? 'Player'}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <span>{item.name}</span>
+                  {item.name}
                 </div>
               ))}
             </motion.div>
