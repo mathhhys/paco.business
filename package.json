@@ -1,0 +1,7 @@
+{
+  "name": "pacomendes.business",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "cd casino-roulette && nvm exec 20 npm run dev"
+  }
+}
