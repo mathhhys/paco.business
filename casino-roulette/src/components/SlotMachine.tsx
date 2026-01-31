@@ -82,9 +82,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ firstNames, lastNames, onSpin
             </motion.div>
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-slate-900/50 via-transparent to-slate-900/50" />
           </div>
-          <div className="text-center mt-2 text-xs md:text-sm text-slate-400 uppercase tracking-wide">
-            First Name
-          </div>
         </div>
 
         {/* Last Name Column */}
@@ -104,9 +101,6 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ firstNames, lastNames, onSpin
               ))}
             </motion.div>
             <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-slate-900/50 via-transparent to-slate-900/50" />
-          </div>
-          <div className="text-center mt-2 text-xs md:text-sm text-slate-400 uppercase tracking-wide">
-            Last Name
           </div>
         </div>
       </div>
