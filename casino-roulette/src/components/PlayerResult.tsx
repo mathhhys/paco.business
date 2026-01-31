@@ -22,7 +22,7 @@ const PlayerResult: React.FC<PlayerResultProps> = ({ firstName, lastName }) => {
           whileHover={{ scale: 1.05 }}
         >
           <Image
-            src={lastName.image_url}
+            src={lastName.image_url ?? '/images/player1.svg'}
             alt={`${firstName.name} ${lastName.name}`}
             width={192}
             height={192}

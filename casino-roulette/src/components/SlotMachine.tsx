@@ -1,33 +1,35 @@
 import { motion, useAnimation, BezierDefinition } from 'framer-motion';
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { mockFirstNames, mockLastNames } from '@/lib/data';
+import type { FirstName, LastName } from '@/lib/types';
 
 interface SlotMachineProps {
+  firstNames: FirstName[];
+  lastNames: LastName[];
   onSpinComplete: (firstIdx: number, lastIdx: number) => void;
 }
 
-const SlotMachine: React.FC<SlotMachineProps> = ({ onSpinComplete }) => {
+const SlotMachine: React.FC<SlotMachineProps> = ({ firstNames, lastNames, onSpinComplete }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const firstControls = useAnimation();
   const lastControls = useAnimation();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Create long strips of names for the rolling effect
-  const firstNamesStrip = useMemo(() => [...mockFirstNames, ...mockFirstNames, ...mockFirstNames, ...mockFirstNames, ...mockFirstNames], []);
-  const lastNamesStrip = useMemo(() => [...mockLastNames, ...mockLastNames, ...mockLastNames, ...mockLastNames, ...mockLastNames], []);
+  const firstNamesStrip = useMemo(() => firstNames.length > 0 ? [...firstNames, ...firstNames, ...firstNames, ...firstNames, ...firstNames] : [], [firstNames]);
+  const lastNamesStrip = useMemo(() => lastNames.length > 0 ? [...lastNames, ...lastNames, ...lastNames, ...lastNames, ...lastNames] : [], [lastNames]);
 
   const ITEM_HEIGHT = 128; // h-32 = 128px
 
   const spin = useCallback(async () => {
-    if (isSpinning) return;
+    if (isSpinning || firstNames.length === 0 || lastNames.length === 0) return;
     setIsSpinning(true);
 
-    const finalFirstIdx = Math.floor(Math.random() * mockFirstNames.length);
-    const finalLastIdx = Math.floor(Math.random() * mockLastNames.length);
+    const finalFirstIdx = Math.floor(Math.random() * firstNames.length);
+    const finalLastIdx = Math.floor(Math.random() * lastNames.length);
 
     // Calculate target positions
-    const targetFirstY = -( (mockFirstNames.length * 3 + finalFirstIdx) * ITEM_HEIGHT );
-    const targetLastY = -( (mockLastNames.length * 3 + finalLastIdx) * ITEM_HEIGHT );
+    const targetFirstY = -( (firstNames.length * 3 + finalFirstIdx) * ITEM_HEIGHT );
+    const targetLastY = -( (lastNames.length * 3 + finalLastIdx) * ITEM_HEIGHT );
 
     // Reset positions without animation
     firstControls.set({ y: 0 });
@@ -46,7 +48,7 @@ const SlotMachine: React.FC<SlotMachineProps> = ({ onSpinComplete }) => {
 
     onSpinComplete(finalFirstIdx, finalLastIdx);
     setIsSpinning(false);
-  }, [isSpinning, onSpinComplete, firstControls, lastControls]);
+  }, [isSpinning, onSpinComplete, firstControls, lastControls, firstNames.length, lastNames.length]);
 
   // Cleanup on unmount
   useEffect(() => {
