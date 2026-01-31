@@ -35,7 +35,7 @@ describe('Home Page', () => {
   it('fetches data from paconames and pacosurname tables', async () => {
     // Mock successful response
     const mockFirstNames = [{ id: 1, firstname: 'Paco' }];
-    const mockLastNames = [{ id: 1, lastname: 'Mendes', image: 'url' }];
+    const mockLastNames = [{ id: 1, lastname: 'Mendes', images: 'url' }];
 
     (supabase.from as jest.Mock).mockImplementation((table) => {
       if (table === 'paconames') {

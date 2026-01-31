@@ -19,8 +19,11 @@ export default function Home() {
       try {
         const [firstRes, lastRes] = await Promise.all([
           supabase.from('paconames').select('id, firstname'),
-          supabase.from('pacosurname').select('id, lastname, image')
+          supabase.from('pacosurname').select('id, lastname, images')
         ]);
+
+        console.log('First Names Response:', firstRes);
+        console.log('Last Names Response:', lastRes);
 
         if (firstRes.error) throw firstRes.error;
         if (lastRes.error) throw lastRes.error;
@@ -33,7 +36,7 @@ export default function Home() {
         const mappedLasts: LastName[] = (lastRes.data ?? []).map((row: any) => ({
           id: Number(row.id),
           name: row.lastname ?? 'Unknown',
-          image_url: row.image ?? '/images/player1.svg'
+          image_url: row.images ?? '/images/player1.svg'
         }));
 
         setFirstNames(mappedFirsts);
@@ -90,6 +93,10 @@ export default function Home() {
             The database tables appear to be empty. Please add data to the
             <code className="bg-slate-800 px-2 py-1 rounded mx-1">paconames</code> and
             <code className="bg-slate-800 px-2 py-1 rounded mx-1">pacosurname</code> tables.
+          </p>
+          <p className="text-sm text-slate-500 mt-4">
+            Note: If you have data, check your <strong>Row Level Security (RLS)</strong> policies in Supabase.
+            You may need to add a policy to allow "Enable read access for all users" (SELECT) for these tables.
           </p>
         </div>
       </main>

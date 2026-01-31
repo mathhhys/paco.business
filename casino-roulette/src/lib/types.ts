@@ -30,17 +30,17 @@ export interface Database {
         Row: {
           id: number;
           lastname: string | null;
-          image: string | null;
+          images: string | null;
         };
         Insert: Omit<{
           id: number;
           lastname: string | null;
-          image: string | null;
+          images: string | null;
         }, 'id'>;
         Update: Partial<Omit<{
           id: number;
           lastname: string | null;
-          image: string | null;
+          images: string | null;
         }, 'id'>>;
       };
     };
